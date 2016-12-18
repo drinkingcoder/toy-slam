@@ -5,6 +5,7 @@
 
 namespace slam {
 
+    class Config;
     class Image;
     class Feature;
     class FeatureExtractor;
@@ -20,7 +21,7 @@ namespace slam {
 
     class Tracker {
     public:
-        Tracker();
+        Tracker(const Config *config);
 
         virtual ~Tracker();
 

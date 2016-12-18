@@ -13,7 +13,8 @@ System::System() {
         (int)m_config->value("Input.sequence.begin"),
         (int)m_config->value("Input.sequence.step", 1)
     );
-    m_tracker = std::make_unique<Tracker>();
+
+    m_tracker = std::make_unique<Tracker>(m_config.get());
 }
 
 System::~System() = default;
