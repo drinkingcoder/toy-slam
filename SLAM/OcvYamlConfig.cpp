@@ -1,16 +1,22 @@
 #include "OcvYamlConfig.h"
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include "OcvHelperFunctions.h"
 
 using namespace slam;
 
 namespace slam {
+
+    class Image;
 
     struct OcvYamlConfig_Impl {
         cv::Ptr<cv::FileStorage> fs;
     };
 
 }
+
+mat3 OcvHelperFunctions::K = mat3::Identity();
+const Image *OcvHelperFunctions::current_image = nullptr;
 
 OcvYamlConfig::OcvYamlConfig(const std::string & filepath) {
     m_pimpl = std::make_unique<OcvYamlConfig_Impl>();
@@ -23,6 +29,7 @@ OcvYamlConfig::OcvYamlConfig(const std::string & filepath) {
         (*(m_pimpl->fs))["Calib.fy"] >> K(1, 1);
         (*(m_pimpl->fs))["Calib.cx"] >> K(0, 2);
         (*(m_pimpl->fs))["Calib.cy"] >> K(1, 2);
+        OcvHelperFunctions::K = K;
     }
 }
 

@@ -2,7 +2,7 @@
 #include "Config.h"
 #include "Image.h"
 #include "Feature.h"
-#include "Initializer.h"
+#include "LazyPairInitializer.h"
 
 #include "OcvOrbFeature.h"
 
@@ -18,25 +18,17 @@ Frame::~Frame() = default;
 
 Tracker::Tracker(const Config *config) {
     m_extractor = std::make_unique<OcvOrbFeatureExtractor>(config);
-    m_initializer = std::make_unique<LazyPairInitializer>();
+    m_initializer = std::make_unique<LazyPairInitializer>(config);
     m_status = STATE_INITIALIZING;
 }
 
 Tracker::~Tracker() = default;
 
 void Tracker::track(const Image *image) {
-    //m_frames.emplace_back(m_extractor->extract(image));
-
-    //auto feature = m_extractor->extract(image);
-
-    //slam::OcvHelperFunctions::show_keypoints(image, feature.get(), 1);
-
-    //if (m_status == STATE_INITIALIZING) {
-    //    m_initializer->initialize(this);
-    //}
-    //else {
-    //    exit(0);
-    //}
-
-    //while (m_frames.size() > 10) { m_frames.pop_front(); }
+    m_frames.emplace_back(m_extractor->extract(image));
+    if (m_status == STATE_INITIALIZING) {
+        OcvHelperFunctions::current_image = image;
+        m_initializer->initialize(this);
+        OcvHelperFunctions::current_image = nullptr;
+    }
 }

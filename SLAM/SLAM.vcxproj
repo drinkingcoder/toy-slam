@@ -139,9 +139,11 @@
   <ItemGroup>
     <ClInclude Include="Config.h" />
     <ClInclude Include="Feature.h" />
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageStream.h" />
     <ClInclude Include="Initializer.h" />
+    <ClInclude Include="LazyPairInitializer.h" />
     <ClInclude Include="OcvCameraImageStream.h" />
     <ClInclude Include="OcvHelperFunctions.h" />
     <ClInclude Include="OcvImage.h" />
@@ -150,6 +152,8 @@
     <ClInclude Include="OcvOrbFeature.h" />
     <ClInclude Include="OcvOrbFeature_Impl.h" />
     <ClInclude Include="OcvYamlConfig.h" />
+    <ClInclude Include="Random.h" />
+    <ClInclude Include="RANSAC.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Tracker.h" />
     <ClInclude Include="Types.h" />

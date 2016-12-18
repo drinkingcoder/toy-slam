@@ -70,6 +70,7 @@ OcvOrbFeatureExtractor::OcvOrbFeatureExtractor(const Config *config) {
         (int)config->value("ORB.nlevels", 8),
         (int)config->value("ORB.edgeThreshold", 31)
     );
+    m_K = config->K;
     m_spread_size = (int)config->value("FAST.spread", 20);
 }
 
@@ -93,8 +94,8 @@ std::unique_ptr<Feature> OcvOrbFeatureExtractor::extract(const Image *image) con
 
     result->keypoints.resize(cvkeypoints.size());
     for (size_t i = 0; i < cvkeypoints.size(); ++i) {
-        result->keypoints[i][0] = cvkeypoints[i].pt.x;
-        result->keypoints[i][1] = cvkeypoints[i].pt.y;
+        result->keypoints[i][0] = (cvkeypoints[i].pt.x - m_K(0, 2)) / m_K(0, 0);
+        result->keypoints[i][1] = (cvkeypoints[i].pt.y - m_K(1, 2)) / m_K(1, 1);
     }
 
     return result;

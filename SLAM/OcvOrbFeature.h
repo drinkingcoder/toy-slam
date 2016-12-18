@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include "Types.h"
 #include "Feature.h"
 
 namespace slam {
@@ -32,6 +33,7 @@ namespace slam {
 
     private:
         std::unique_ptr<OcvOrbFeatureExtractor_Impl> m_pimpl;
+        mat3 m_K;
         int m_spread_size;
     };
 

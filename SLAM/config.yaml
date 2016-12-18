@@ -5,7 +5,7 @@
 # Input.type: "video"
 # Input.type: "camera"
 
-Input.sequence.pattern: 'E:\Gangwan-street\1\rect%05d.jpg'
+Input.sequence.pattern: 'E:\Gangwan-street\2\rect%05d.jpg'
 Input.sequence.begin: 0
 Input.sequence.step: 1
 

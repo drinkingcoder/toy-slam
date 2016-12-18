@@ -1,6 +1,7 @@
 #include "System.h"
 #include "OcvYamlConfig.h"
 #include "OcvImageSequenceStream.h"
+#include "OcvCameraImageStream.h"
 #include "Tracker.h"
 
 using namespace slam;
@@ -13,6 +14,8 @@ System::System() {
         (int)m_config->value("Input.sequence.begin"),
         (int)m_config->value("Input.sequence.step", 1)
     );
+
+    //m_stream = std::make_unique<OcvCameraImageStream>();
 
     m_tracker = std::make_unique<Tracker>(m_config.get());
 }
