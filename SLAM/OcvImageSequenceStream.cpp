@@ -9,8 +9,7 @@ OcvImageSequenceStream::OcvImageSequenceStream(const std::string & pattern, int 
 
 OcvImageSequenceStream::~OcvImageSequenceStream() = default;
 
-std::unique_ptr<Image> OcvImageSequenceStream::next()
-{
+std::unique_ptr<Image> OcvImageSequenceStream::next() {
     char buf[256];
     snprintf(buf, 256 * sizeof(char), m_pattern.c_str(), m_current);
     m_current += m_step;

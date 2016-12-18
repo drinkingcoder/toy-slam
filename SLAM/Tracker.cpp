@@ -9,8 +9,7 @@
 
 using namespace slam;
 
-Frame::Frame(std::unique_ptr<Feature>&& feature)
-{
+Frame::Frame(std::unique_ptr<Feature>&& feature) {
     this->feature = std::move(feature);
 }
 
