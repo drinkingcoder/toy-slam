@@ -16,7 +16,7 @@ using namespace slam;
 OcvCameraImageStream::OcvCameraImageStream() {
     m_pimpl = std::make_unique<OcvCameraImageStream_Impl>();
     m_pimpl->vc.reset(new cv::VideoCapture(0));
-    m_pimpl->vc->set(cv::CAP_PROP_SETTINGS, 0);
+    //m_pimpl->vc->set(cv::CAP_PROP_SETTINGS, 0);
 }
 
 OcvCameraImageStream::~OcvCameraImageStream() = default;
