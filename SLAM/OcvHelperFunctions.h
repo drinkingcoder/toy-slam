@@ -1,6 +1,7 @@
 #pragma once
 
 #include <opencv2/opencv.hpp>
+#include "Types.h"
 #include "OcvImage.h"
 #include "OcvImage_Impl.h"
 #include "OcvOrbFeature.h"
@@ -9,6 +10,16 @@
 namespace slam {
 
     struct OcvHelperFunctions {
+
+        static mat3 K;
+        static const Image *current_image;
+
+        static void show_image(int delay = 0) {
+            if (current_image) {
+                show_image(current_image, delay);
+            }
+        }
+
         static void show_image(const Image *image, int delay = 0) {
             const OcvImage *ocvimage = dynamic_cast<const OcvImage *>(image);
             if (ocvimage == nullptr || !ocvimage->valid()) {
@@ -19,6 +30,12 @@ namespace slam {
             cv::waitKey(delay);
         }
 
+        static void show_keypoints(const Feature *feature, int delay = 0) {
+            if (current_image) {
+                show_keypoints(current_image, feature, delay);
+            }
+        }
+
         static void show_keypoints(const Image *image, const Feature *feature, int delay = 0) {
             const OcvImage *ocvimage = dynamic_cast<const OcvImage *>(image);
             const OcvOrbFeature *ocvfeature = dynamic_cast<const OcvOrbFeature *>(feature);
@@ -27,12 +44,12 @@ namespace slam {
             }
             std::vector<cv::KeyPoint> cvkeypoints(ocvfeature->keypoints.size());
             for (size_t i = 0; i < ocvfeature->keypoints.size(); ++i) {
-                cvkeypoints[i].pt.x = ocvfeature->keypoints[i][0];
-                cvkeypoints[i].pt.y = ocvfeature->keypoints[i][1];
+                cvkeypoints[i].pt.x = ocvfeature->keypoints[i][0] * K(0, 0) + K(0, 2);
+                cvkeypoints[i].pt.y = ocvfeature->keypoints[i][1] * K(1, 1) + K(1, 2);
             }
 
             cv::Mat img;
-            cv::drawKeypoints(ocvimage->m_pimpl->image, cvkeypoints, img);
+            cv::drawKeypoints(ocvimage->m_pimpl->image, cvkeypoints, img, cv::Scalar(0, 0, 255));
             //cv::namedWindow("OcvHelperFunctions::show_keypoints", cv::WINDOW_NORMAL | cv::WINDOW_KEEPRATIO);
             cv::imshow("OcvHelperFunctions::show_keypoints", img);
             cv::waitKey(delay);
@@ -52,12 +69,12 @@ namespace slam {
             std::vector<cv::KeyPoint> cvkeypoints_target(ocvfeature_target->keypoints.size());
 
             for (size_t i = 0; i < ocvfeature_source->keypoints.size(); ++i) {
-                cvkeypoints_source[i].pt.x = ocvfeature_source->keypoints[i][0];
-                cvkeypoints_source[i].pt.y = ocvfeature_source->keypoints[i][1];
+                cvkeypoints_source[i].pt.x = ocvfeature_source->keypoints[i][0] * K(0, 0) + K(0, 2);
+                cvkeypoints_source[i].pt.y = ocvfeature_source->keypoints[i][1] * K(1, 1) + K(1, 2);
             }
             for (size_t i = 0; i < ocvfeature_target->keypoints.size(); ++i) {
-                cvkeypoints_target[i].pt.x = ocvfeature_target->keypoints[i][0];
-                cvkeypoints_target[i].pt.y = ocvfeature_target->keypoints[i][1];
+                cvkeypoints_target[i].pt.x = ocvfeature_target->keypoints[i][0] * K(0, 0) + K(0, 2);
+                cvkeypoints_target[i].pt.y = ocvfeature_target->keypoints[i][1] * K(1, 1) + K(1, 2);
             }
 
             std::vector<cv::DMatch> cvmatches(matches.size());
@@ -67,10 +84,16 @@ namespace slam {
             }
 
             cv::Mat img;
-            cv::drawMatches(ocvimage_source->m_pimpl->image, cvkeypoints_source, ocvimage_target->m_pimpl->image, cvkeypoints_target, cvmatches, img);
+            cv::drawMatches(ocvimage_source->m_pimpl->image, cvkeypoints_source, ocvimage_target->m_pimpl->image, cvkeypoints_target, cvmatches, img, cv::Scalar(0, 0, 255), cv::Scalar(0, 0, 128));
             //cv::namedWindow("OcvHelperFunctions::show_match", cv::WINDOW_NORMAL | cv::WINDOW_KEEPRATIO);
             cv::imshow("OcvHelperFunctions::show_match", img);
             cv::waitKey(delay);
+        }
+
+        static void show_match_overlayed(const Feature *feature_source, const Feature *feature_target, const match_vector &matches, int delay = 0) {
+            if (current_image) {
+                show_match_overlayed(current_image, feature_source, feature_target, matches, delay);
+            }
         }
 
         static void show_match_overlayed(const Image *image_source, const Feature *feature_source, const Feature *feature_target, const match_vector &matches, int delay = 0) {
@@ -86,12 +109,12 @@ namespace slam {
             std::vector<cv::KeyPoint> cvkeypoints_target(ocvfeature_target->keypoints.size());
 
             for (size_t i = 0; i < ocvfeature_source->keypoints.size(); ++i) {
-                cvkeypoints_source[i].pt.x = ocvfeature_source->keypoints[i][0];
-                cvkeypoints_source[i].pt.y = ocvfeature_source->keypoints[i][1];
+                cvkeypoints_source[i].pt.x = ocvfeature_source->keypoints[i][0] * K(0, 0) + K(0, 2);
+                cvkeypoints_source[i].pt.y = ocvfeature_source->keypoints[i][1] * K(1, 1) + K(1, 2);
             }
             for (size_t i = 0; i < ocvfeature_target->keypoints.size(); ++i) {
-                cvkeypoints_target[i].pt.x = ocvfeature_target->keypoints[i][0];
-                cvkeypoints_target[i].pt.y = ocvfeature_target->keypoints[i][1];
+                cvkeypoints_target[i].pt.x = ocvfeature_target->keypoints[i][0] * K(0, 0) + K(0, 2);
+                cvkeypoints_target[i].pt.y = ocvfeature_target->keypoints[i][1] * K(1, 1) + K(1, 2);
             }
 
             cv::Mat img;
