@@ -72,6 +72,36 @@ namespace slam {
             cv::imshow("OcvHelperFunctions::show_match", img);
             cv::waitKey(delay);
         }
+
+        static void show_match_overlayed(const Image *image_source, const Feature *feature_source, const Feature *feature_target, const match_vector &matches, int delay = 0) {
+            const OcvImage *ocvimage_source = dynamic_cast<const OcvImage *>(image_source);
+            const OcvOrbFeature *ocvfeature_source = dynamic_cast<const OcvOrbFeature *>(feature_source);
+            const OcvOrbFeature *ocvfeature_target = dynamic_cast<const OcvOrbFeature *>(feature_target);
+
+            if (ocvimage_source == nullptr || ocvfeature_source == nullptr || ocvfeature_target == nullptr || !ocvimage_source->valid()) {
+                return;
+            }
+
+            std::vector<cv::KeyPoint> cvkeypoints_source(ocvfeature_source->keypoints.size());
+            std::vector<cv::KeyPoint> cvkeypoints_target(ocvfeature_target->keypoints.size());
+
+            for (size_t i = 0; i < ocvfeature_source->keypoints.size(); ++i) {
+                cvkeypoints_source[i].pt.x = ocvfeature_source->keypoints[i][0];
+                cvkeypoints_source[i].pt.y = ocvfeature_source->keypoints[i][1];
+            }
+            for (size_t i = 0; i < ocvfeature_target->keypoints.size(); ++i) {
+                cvkeypoints_target[i].pt.x = ocvfeature_target->keypoints[i][0];
+                cvkeypoints_target[i].pt.y = ocvfeature_target->keypoints[i][1];
+            }
+
+            cv::Mat img;
+            cv::drawKeypoints(ocvimage_source->m_pimpl->image, cvkeypoints_source, img, cv::Scalar(0, 0, 255));
+            for (auto &m : matches) {
+                cv::line(img, cvkeypoints_source[m.first].pt, cvkeypoints_target[m.second].pt, cv::Scalar(0, 0, 255));
+            }
+            cv::imshow("OcvHelperFunctions::show_match_overlayed", img);
+            cv::waitKey(0);
+        }
     };
 
 }
