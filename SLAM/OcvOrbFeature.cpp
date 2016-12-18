@@ -19,6 +19,10 @@ match_vector OcvOrbFeature::match(const Feature *feature) const {
         return match_vector();
     }
 
+    if (keypoints.size() == 0 || feature->keypoints.size() == 0) {
+        return match_vector();
+    }
+
     cv::BFMatcher matcher(cv::NORM_HAMMING, true);
     std::vector<cv::DMatch> cvresult;
     matcher.match(m_pimpl->descriptors, cvfeature->m_pimpl->descriptors, cvresult);
