@@ -31,5 +31,3 @@ std::unique_ptr<Image> OcvCameraImageStream::next() {
         return img;
     }
 }
-
-
