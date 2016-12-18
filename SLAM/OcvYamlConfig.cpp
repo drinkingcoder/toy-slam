@@ -18,6 +18,12 @@ OcvYamlConfig::OcvYamlConfig(const std::string & filepath) {
     if (!m_pimpl->fs->isOpened()) {
         std::cerr << "Cannot open config file: " << filepath << std::endl;
     }
+    else {
+        (*(m_pimpl->fs))["Calib.fx"] >> K(0, 0);
+        (*(m_pimpl->fs))["Calib.fy"] >> K(1, 1);
+        (*(m_pimpl->fs))["Calib.cx"] >> K(0, 2);
+        (*(m_pimpl->fs))["Calib.cy"] >> K(1, 2);
+    }
 }
 
 OcvYamlConfig::~OcvYamlConfig() = default;
