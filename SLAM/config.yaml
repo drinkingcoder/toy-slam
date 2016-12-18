@@ -1,0 +1,36 @@
+%YAML:1.0
+
+# Input Type
+# Input.type: "sequence"
+# Input.type: "video"
+# Input.type: "camera"
+
+Input.sequence.pattern: 'E:\Gangwan-street\1\rect%05d.jpg'
+Input.sequence.begin: 0
+Input.sequence.step: 1
+
+# Input.video.filename: ''
+
+# Camera calibration data.
+Calib.fx: 749
+Calib.fy: 749
+Calib.cx: 479.5
+Calib.cy: 269.5
+
+# FAST feature detector parameters.
+FAST.threshold: 20
+FAST.spread: 20     # Features are spreaded using grid
+
+Initializer.matchWindow: 2
+
+RANSAC.sigma: 1.0
+RANSAC.successRate: 0.99
+RANSAC.maxIteration: 200
+
+# RANSAC.Essential.sigma: 1.0
+# RANSAC.Essential.successRate: 0.99
+# RANSAC.Essential.maxIteration: 200
+
+# RANSAC.Homography.sigma: 1.0
+# RANSAC.Homography.successRate: 0.99
+# RANSAC.Homography.maxIteration: 200

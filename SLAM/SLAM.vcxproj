@@ -131,10 +131,12 @@
     <ClCompile Include="OcvImage.cpp" />
     <ClCompile Include="OcvImageSequenceStream.cpp" />
     <ClCompile Include="OcvOrbFeature.cpp" />
+    <ClCompile Include="OcvYamlConfig.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="Tracker.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Config.h" />
     <ClInclude Include="Feature.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageStream.h" />
@@ -145,9 +147,13 @@
     <ClInclude Include="OcvImage_Impl.h" />
     <ClInclude Include="OcvOrbFeature.h" />
     <ClInclude Include="OcvOrbFeature_Impl.h" />
+    <ClInclude Include="OcvYamlConfig.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Tracker.h" />
     <ClInclude Include="Types.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config.yaml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
