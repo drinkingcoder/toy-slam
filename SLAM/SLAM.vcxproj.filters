@@ -39,6 +39,9 @@
     <ClCompile Include="OcvYamlConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OcvCameraImageStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h">
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OcvYamlConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OcvCameraImageStream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

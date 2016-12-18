@@ -128,6 +128,7 @@
   <ItemGroup>
     <ClCompile Include="LazyPairInitializer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="OcvCameraImageStream.cpp" />
     <ClCompile Include="OcvImage.cpp" />
     <ClCompile Include="OcvImageSequenceStream.cpp" />
     <ClCompile Include="OcvOrbFeature.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageStream.h" />
     <ClInclude Include="Initializer.h" />
+    <ClInclude Include="OcvCameraImageStream.h" />
     <ClInclude Include="OcvHelperFunctions.h" />
     <ClInclude Include="OcvImage.h" />
     <ClInclude Include="OcvImageSequenceStream.h" />

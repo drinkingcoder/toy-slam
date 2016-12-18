@@ -20,6 +20,7 @@ namespace slam {
 
     private:
         friend class OcvOrbFeatureExtractor;
+        friend class OcvCameraImageStream;
         std::unique_ptr<OcvImage_Impl> m_pimpl;
     };
 
