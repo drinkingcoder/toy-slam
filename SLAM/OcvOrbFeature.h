@@ -21,16 +21,18 @@ namespace slam {
     };
 
     struct OcvOrbFeatureExtractor_Impl;
+    class Config;
 
     class OcvOrbFeatureExtractor : public FeatureExtractor {
     public:
-        OcvOrbFeatureExtractor();
+        OcvOrbFeatureExtractor(const Config *config);
         ~OcvOrbFeatureExtractor();
 
         std::unique_ptr<Feature> extract(const Image *image) const override;
 
     private:
         std::unique_ptr<OcvOrbFeatureExtractor_Impl> m_pimpl;
+        int m_spread_size;
     };
 
 }

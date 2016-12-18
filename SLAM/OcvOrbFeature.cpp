@@ -1,4 +1,5 @@
 #include <unordered_map>
+#include "Config.h"
 #include "OcvOrbFeature.h"
 #include "OcvOrbFeature_Impl.h"
 #include "OcvImage.h"
@@ -61,10 +62,15 @@ static void spread_keypoints(std::vector<cv::KeyPoint> &cvkeypoints, int grid_si
     }
 }
 
-OcvOrbFeatureExtractor::OcvOrbFeatureExtractor() {
+OcvOrbFeatureExtractor::OcvOrbFeatureExtractor(const Config *config) {
     m_pimpl = std::make_unique<OcvOrbFeatureExtractor_Impl>();
-    m_pimpl->fast = cv::FastFeatureDetector::create();
-    m_pimpl->orb = cv::ORB::create();
+    m_pimpl->fast = cv::FastFeatureDetector::create((int)config->value("FAST.threshold", 10), true);
+    m_pimpl->orb = cv::ORB::create(0,
+        (float)config->value("ORB.scaleFactor", 1.2),
+        (int)config->value("ORB.nlevels", 8),
+        (int)config->value("ORB.edgeThreshold", 31)
+    );
+    m_spread_size = (int)config->value("FAST.spread", 20);
 }
 
 OcvOrbFeatureExtractor::~OcvOrbFeatureExtractor() = default;
@@ -81,7 +87,7 @@ std::unique_ptr<Feature> OcvOrbFeatureExtractor::extract(const Image *image) con
 
     m_pimpl->fast->detect(cvmat, cvkeypoints);
 
-    spread_keypoints(cvkeypoints);
+    spread_keypoints(cvkeypoints, m_spread_size);
 
     m_pimpl->orb->compute(cvmat, cvkeypoints, result->m_pimpl->descriptors);
 
