@@ -123,7 +123,7 @@ namespace slam {
                 cv::line(img, cvkeypoints_source[m.first].pt, cvkeypoints_target[m.second].pt, cv::Scalar(0, 0, 255));
             }
             cv::imshow("OcvHelperFunctions::show_match_overlayed", img);
-            cv::waitKey(0);
+            cv::waitKey(delay);
         }
     };
 

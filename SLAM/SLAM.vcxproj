@@ -156,6 +156,7 @@
     <ClInclude Include="RANSAC.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Tracker.h" />
+    <ClInclude Include="Triangulator.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>

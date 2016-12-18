@@ -4,6 +4,8 @@
 #include "Random.h"
 #include "Geometry.h"
 
+#include <iostream>
+
 namespace slam {
 
     class RANSAC {
@@ -21,6 +23,7 @@ namespace slam {
             size_t ds = data_size();
             size_t ss = sample_size();
             if (ds < ss) {
+                reset_model();
                 return;
             }
 
@@ -61,6 +64,7 @@ namespace slam {
         virtual size_t data_size() const = 0;
         virtual size_t sample_size() const = 0;
 
+        virtual void reset_model() = 0;
         virtual void fit_model(const std::vector<size_t> &sample_set) = 0;
         virtual real eval_model(std::vector<bool> &inlier_set, size_t &inlier_count) = 0;
         virtual void refine_model(const std::vector<bool> &inlier_set) = 0;
@@ -108,6 +112,13 @@ namespace slam {
 
         size_t sample_size() const override {
             return 8;
+        }
+
+        void reset_model() override {
+            E = mat3::Zero();
+            matches.clear();
+            iter = 0;
+            score = 0;
         }
 
         std::vector<vec2> a, b; // optimization purpose
@@ -184,6 +195,11 @@ namespace slam {
             }
             matches.shrink_to_fit();
 
+            if (matches.size() < sample_size()) {
+                return;
+            }
+
+
             std::vector<vec2> a, b;
             a.resize(matches.size());
             b.resize(matches.size());
@@ -235,6 +251,13 @@ namespace slam {
 
         size_t sample_size() const override {
             return 4;
+        }
+
+        void reset_model() override {
+            H = mat3::Zero();
+            matches.clear();
+            iter = 0;
+            score = 0;
         }
 
         std::vector<vec2> a, b;
@@ -310,6 +333,10 @@ namespace slam {
                 }
             }
             matches.shrink_to_fit();
+
+            if (matches.size() < sample_size()) {
+                return;
+            }
 
             std::vector<vec2> a, b;
             a.resize(matches.size());

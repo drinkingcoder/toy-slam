@@ -25,7 +25,7 @@ Initializer.matchWindow: 2
 
 RANSAC.sigma: 1.0
 RANSAC.successRate: 0.99
-RANSAC.maxIteration: 200
+RANSAC.maxIteration: 100
 
 # RANSAC.Essential.sigma: 1.0
 # RANSAC.Essential.successRate: 0.99
