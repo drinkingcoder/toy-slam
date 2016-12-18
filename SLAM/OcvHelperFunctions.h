@@ -9,17 +9,17 @@
 namespace slam {
 
     struct OcvHelperFunctions {
-        static void show_image(const Image *image) {
+        static void show_image(const Image *image, int delay = 0) {
             const OcvImage *ocvimage = dynamic_cast<const OcvImage *>(image);
             if (ocvimage == nullptr || !ocvimage->valid()) {
                 return;
             }
-            cv::namedWindow("OcvHelperFunctions::show_image", cv::WINDOW_NORMAL | cv::WINDOW_KEEPRATIO);
+            //cv::namedWindow("OcvHelperFunctions::show_image", cv::WINDOW_NORMAL | cv::WINDOW_KEEPRATIO);
             cv::imshow("OcvHelperFunctions::show_image", ocvimage->m_pimpl->image);
-            cv::waitKey(0);
+            cv::waitKey(delay);
         }
 
-        static void show_keypoints(const Image *image, const Feature *feature) {
+        static void show_keypoints(const Image *image, const Feature *feature, int delay = 0) {
             const OcvImage *ocvimage = dynamic_cast<const OcvImage *>(image);
             const OcvOrbFeature *ocvfeature = dynamic_cast<const OcvOrbFeature *>(feature);
             if (ocvimage == nullptr || ocvfeature == nullptr || !ocvimage->valid()) {
@@ -33,12 +33,12 @@ namespace slam {
 
             cv::Mat img;
             cv::drawKeypoints(ocvimage->m_pimpl->image, cvkeypoints, img);
-            cv::namedWindow("OcvHelperFunctions::show_keypoints", cv::WINDOW_NORMAL | cv::WINDOW_KEEPRATIO);
+            //cv::namedWindow("OcvHelperFunctions::show_keypoints", cv::WINDOW_NORMAL | cv::WINDOW_KEEPRATIO);
             cv::imshow("OcvHelperFunctions::show_keypoints", img);
-            cv::waitKey(0);
+            cv::waitKey(delay);
         }
 
-        static void show_match(const Image *image_source, const Feature *feature_source, const Image *image_target, const Feature *feature_target, const match_vector &matches) {
+        static void show_match(const Image *image_source, const Feature *feature_source, const Image *image_target, const Feature *feature_target, const match_vector &matches, int delay = 0) {
             const OcvImage *ocvimage_source = dynamic_cast<const OcvImage *>(image_source);
             const OcvImage *ocvimage_target = dynamic_cast<const OcvImage *>(image_target);
             const OcvOrbFeature *ocvfeature_source = dynamic_cast<const OcvOrbFeature *>(feature_source);
@@ -68,9 +68,9 @@ namespace slam {
 
             cv::Mat img;
             cv::drawMatches(ocvimage_source->m_pimpl->image, cvkeypoints_source, ocvimage_target->m_pimpl->image, cvkeypoints_target, cvmatches, img);
-            cv::namedWindow("OcvHelperFunctions::show_match", cv::WINDOW_NORMAL | cv::WINDOW_KEEPRATIO);
+            //cv::namedWindow("OcvHelperFunctions::show_match", cv::WINDOW_NORMAL | cv::WINDOW_KEEPRATIO);
             cv::imshow("OcvHelperFunctions::show_match", img);
-            cv::waitKey(0);
+            cv::waitKey(delay);
         }
     };
 
