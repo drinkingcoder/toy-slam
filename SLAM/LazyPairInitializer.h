@@ -19,13 +19,14 @@ namespace slam {
         LazyPairInitializer(const Config *config);
         ~LazyPairInitializer();
 
-        virtual bool initialize(Tracker *tracker);
+        bool initialize(const std::shared_ptr<Frame> &pframe) override;
 
     private:
-        Frame *m_first_frame = nullptr;
-        size_t m_frame_count = 0;
         real m_min_parallax;
         mat3 m_K;
+
+        std::shared_ptr<Frame> m_first_frame;
+        size_t m_frame_count = 0;
         std::unique_ptr<EightPointEssentialRANSAC> m_essential_ransac;
         std::unique_ptr<FourPointHomographyRANSAC> m_homography_ransac;
         std::unique_ptr<Triangulator> m_triangulator;

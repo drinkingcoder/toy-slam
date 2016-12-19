@@ -1,14 +1,16 @@
 #pragma once
 
+#include <memory>
+
 namespace slam {
 
-    class Tracker;
+    class Frame;
 
     class Initializer {
     public:
         virtual ~Initializer() {}
 
-        virtual bool initialize(Tracker *tracker) = 0;
+        virtual bool initialize(const std::shared_ptr<Frame> &pframe) = 0;
 
     };
 

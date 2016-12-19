@@ -11,7 +11,7 @@
 using namespace slam;
 
 LazyPairInitializer::LazyPairInitializer(const Config *config) {
-    m_first_frame = nullptr;
+    m_first_frame.reset();
     m_frame_count = 0;
 
     real sigma = (real)config->value("RANSAC.sigma", 1.0);
@@ -43,24 +43,25 @@ LazyPairInitializer::LazyPairInitializer(const Config *config) {
 
 LazyPairInitializer::~LazyPairInitializer() = default;
 
-bool LazyPairInitializer::initialize(Tracker *tracker) {
-    Frame &current_frame = tracker->current_frame();
+bool LazyPairInitializer::initialize(const std::shared_ptr<Frame> &pframe) {
     if (m_first_frame) {
         m_frame_count++;
-        match_vector matches = m_first_frame->feature->match(current_frame.feature.get(), 5, 0.5f*m_K(0, 2) / m_K(0, 0));
+        match_vector matches = m_first_frame->feature->match(pframe->feature.get(), 5, 0.5f*m_K(0, 2) / m_K(0, 0));
         size_t N = matches.size();
 
-        m_essential_ransac->set_dataset(m_first_frame->feature->keypoints, current_frame.feature->keypoints, matches);
+        m_essential_ransac->set_dataset(m_first_frame->feature->keypoints, pframe->feature->keypoints, matches);
         m_essential_ransac->run();
         matches.swap(m_essential_ransac->matches);
 
-        m_homography_ransac->set_dataset(m_first_frame->feature->keypoints, current_frame.feature->keypoints, matches);
+        m_homography_ransac->set_dataset(m_first_frame->feature->keypoints, pframe->feature->keypoints, matches);
         m_homography_ransac->run();
         matches.swap(m_homography_ransac->matches);
 
-        m_triangulator->set_dataset(m_first_frame->feature->keypoints, current_frame.feature->keypoints, matches);
+        m_triangulator->set_dataset(m_first_frame->feature->keypoints, pframe->feature->keypoints, matches);
         m_triangulator->run(m_essential_ransac->E);
         matches.swap(m_triangulator->matches);
+
+        OcvHelperFunctions::show_match_overlayed(m_first_frame->feature.get(), pframe->feature.get(), matches, 1);
 
         real angle = acos(m_triangulator->parallax) * 180 / 3.1415927f;
 
@@ -70,34 +71,36 @@ bool LazyPairInitializer::initialize(Tracker *tracker) {
         real wy = m_K(1, 2) * 0.25f;
         std::unordered_set<int> grid;
         for (auto &m : matches) {
-            auto &pt = current_frame.feature->keypoints[m.second];
+            auto &pt = pframe->feature->keypoints[m.second];
             int ix = (int)((pt[0] * m_K(0, 0)) / wx + 5);
             int iy = (int)((pt[1] * m_K(1, 1)) / wy + 5);
             grid.emplace(ix + iy * 100);
         }
 
-        if (angle >= m_min_parallax && grid.size() >= 32) {
-            m_first_frame->is_keyframe = true;
-            m_first_frame->is_fixed = true;
-            m_first_frame->R = mat3::Identity();
-            m_first_frame->T = vec3::Zero();
-            current_frame.is_keyframe = true;
-            current_frame.is_fixed = true;
-            current_frame.R = m_triangulator->R;
-            current_frame.T = m_triangulator->T;
+        //std::cout << angle << " => " << grid.size() << std::endl;
 
-            m_first_frame = nullptr;
+        if (angle >= m_min_parallax && grid.size() >= 24) {
+            //m_first_frame->is_keyframe = true;
+            //m_first_frame->is_fixed = true;
+            //m_first_frame->R = mat3::Identity();
+            //m_first_frame->T = vec3::Zero();
+            //current_frame.is_keyframe = true;
+            //current_frame.is_fixed = true;
+            //current_frame.R = m_triangulator->R;
+            //current_frame.T = m_triangulator->T;
+            std::cout << "INIT: " << pframe.get() << std::endl;
+            m_first_frame.reset();
 
             return true;
         }
 
         if (m_frame_count > 10 && matches.size() <= N / 10) {
-            m_first_frame = &current_frame;
+            m_first_frame = pframe;
             m_frame_count = 0;
         }
     }
     else {
-        m_first_frame = &current_frame;
+        m_first_frame = pframe;
         m_frame_count = 0;
     }
 

@@ -26,16 +26,17 @@ Tracker::Tracker(const Config *config) {
 Tracker::~Tracker() = default;
 
 void Tracker::track(const Image *image) {
-    m_frames.emplace_back(m_extractor->extract(image));
-    OcvHelperFunctions::show_keypoints(image, current_frame().feature.get(), 1);
+    std::shared_ptr<Frame> pframe = std::make_shared<Frame>(m_extractor->extract(image));
+
+    //OcvHelperFunctions::show_keypoints(image, pframe->feature.get(), 1);
+
+    //OcvHelperFunctions::show_keypoints(image, current_frame().feature.get(), 1);
     if (m_status == STATE_INITIALIZING) {
         OcvHelperFunctions::current_image = image;
-        bool ret = m_initializer->initialize(this);
-        OcvHelperFunctions::current_image = nullptr;
-        if (ret) {
-            m_frames.remove_if([](const Frame &f)->bool { return !(f.is_keyframe); });
-            m_status = STATE_TRACKING;
+        if (m_initializer->initialize(pframe)) {
+            //m_status = STATE_TRACKING;
         }
+        OcvHelperFunctions::current_image = nullptr;
     }
     else {
         exit(0);
