@@ -1,5 +1,7 @@
-#include "OcvYamlConfig.h"
+#include <cctype>
+#include <algorithm>
 #include <iostream>
+#include "OcvYamlConfig.h"
 #include <opencv2/opencv.hpp>
 #include "OcvHelperFunctions.h"
 
@@ -35,13 +37,17 @@ OcvYamlConfig::OcvYamlConfig(const std::string & filepath) {
 
 OcvYamlConfig::~OcvYamlConfig() = default;
 
-std::string OcvYamlConfig::text(const std::string & config, const std::string & def) const {
+std::string OcvYamlConfig::text(const std::string & config, const std::string & def, bool normalize) const {
     const cv::FileNode &n = (*(m_pimpl->fs))[config];
     if (n.isNone()) {
         return def;
     }
     else {
-        return (std::string)n;
+        std::string result = (std::string)n;
+        if (normalize) {
+            std::transform(result.begin(), result.end(), result.begin(), std::tolower);
+        }
+        return result;
     }
 }
 

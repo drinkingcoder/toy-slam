@@ -12,7 +12,7 @@ namespace slam {
         OcvYamlConfig(const std::string &filepath);
         ~OcvYamlConfig();
 
-        std::string text(const std::string &config, const std::string &def = "") const override;
+        std::string text(const std::string &config, const std::string &def = "", bool normalize = true) const override;
         double value(const std::string &config, const double &def = 0.0) const override;
 
     private:
