@@ -14,6 +14,20 @@ namespace slam {
         static mat3 K;
         static const Image *current_image;
 
+        static void save_image(const std::string &filepath) {
+            if (current_image) {
+                save_image(current_image, filepath);
+            }
+        }
+
+        static void save_image(const Image *image, const std::string &filepath) {
+            const OcvImage *ocvimage = dynamic_cast<const OcvImage *>(image);
+            if (ocvimage == nullptr || !ocvimage->valid()) {
+                return;
+            }
+            cv::imwrite(filepath, ocvimage->m_pimpl->image);
+        }
+
         static void show_image(int delay = 0) {
             if (current_image) {
                 show_image(current_image, delay);
@@ -25,7 +39,6 @@ namespace slam {
             if (ocvimage == nullptr || !ocvimage->valid()) {
                 return;
             }
-            //cv::namedWindow("OcvHelperFunctions::show_image", cv::WINDOW_NORMAL | cv::WINDOW_KEEPRATIO);
             cv::imshow("OcvHelperFunctions::show_image", ocvimage->m_pimpl->image);
             cv::waitKey(delay);
         }
@@ -50,7 +63,6 @@ namespace slam {
 
             cv::Mat img;
             cv::drawKeypoints(ocvimage->m_pimpl->image, cvkeypoints, img, cv::Scalar(0, 0, 255));
-            //cv::namedWindow("OcvHelperFunctions::show_keypoints", cv::WINDOW_NORMAL | cv::WINDOW_KEEPRATIO);
             cv::imshow("OcvHelperFunctions::show_keypoints", img);
             cv::waitKey(delay);
         }
@@ -85,7 +97,6 @@ namespace slam {
 
             cv::Mat img;
             cv::drawMatches(ocvimage_source->m_pimpl->image, cvkeypoints_source, ocvimage_target->m_pimpl->image, cvkeypoints_target, cvmatches, img, cv::Scalar(0, 0, 255), cv::Scalar(0, 0, 128));
-            //cv::namedWindow("OcvHelperFunctions::show_match", cv::WINDOW_NORMAL | cv::WINDOW_KEEPRATIO);
             cv::imshow("OcvHelperFunctions::show_match", img);
             cv::waitKey(delay);
         }
