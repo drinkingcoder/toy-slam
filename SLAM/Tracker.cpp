@@ -31,7 +31,4 @@ void Tracker::track(const Image *image) {
         m_initializer->initialize(this);
         OcvHelperFunctions::current_image = nullptr;
     }
-    //while (m_frames.size() > 20) {
-    //    m_frames.pop_front();
-    //}
 }
