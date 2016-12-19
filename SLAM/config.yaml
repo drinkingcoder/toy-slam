@@ -1,13 +1,12 @@
 %YAML:1.0
 
 # Input Type
-# Input.type: "sequence"
-# Input.type: "video"
-# Input.type: "camera"
+#Input.type: "Camera"
+Input.type: "Sequence"
 
-Input.sequence.pattern: 'E:\Gangwan-street\2\rect%05d.jpg'
-Input.sequence.begin: 0
-Input.sequence.step: 1
+Input.Sequence.pattern: 'E:\Gangwan-street\2\rect%05d.jpg'
+Input.Sequence.begin: 0
+Input.Sequence.step: 1
 
 # Input.video.filename: ''
 
