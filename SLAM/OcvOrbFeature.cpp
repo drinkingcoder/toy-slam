@@ -13,7 +13,7 @@ OcvOrbFeature::OcvOrbFeature() {
 
 OcvOrbFeature::~OcvOrbFeature() = default;
 
-match_vector OcvOrbFeature::match(const Feature *feature) const {
+match_vector OcvOrbFeature::match(const Feature *feature, size_t k, real radius) const {
     const OcvOrbFeature *cvfeature = dynamic_cast<const OcvOrbFeature*>(feature);
     if (cvfeature == nullptr) {
         return match_vector();
@@ -23,7 +23,25 @@ match_vector OcvOrbFeature::match(const Feature *feature) const {
         return match_vector();
     }
 
-    cv::BFMatcher matcher(cv::NORM_HAMMING, true);
+    real radius2 = radius*radius;
+
+    cv::BFMatcher matcher(cv::NORM_HAMMING, false);
+#if 1
+    std::vector<std::vector<cv::DMatch>> cvknnresult;
+    matcher.knnMatch(m_pimpl->descriptors, cvfeature->m_pimpl->descriptors, cvknnresult, (int)k);
+
+    match_vector result;
+    result.reserve(cvknnresult.size());
+    for (size_t i = 0; i < cvknnresult.size(); ++i) {
+        for (size_t j = 0; j < cvknnresult[i].size(); ++j) {
+            if ((cvfeature->keypoints[cvknnresult[i][j].trainIdx] - keypoints[cvknnresult[i][j].queryIdx]).squaredNorm() < radius2) {
+                result.emplace_back(cvknnresult[i][j].queryIdx, cvknnresult[i][j].trainIdx);
+                break;
+            }
+        }
+    }
+    result.shrink_to_fit();
+#else
     std::vector<cv::DMatch> cvresult;
     matcher.match(m_pimpl->descriptors, cvfeature->m_pimpl->descriptors, cvresult);
 
@@ -32,7 +50,7 @@ match_vector OcvOrbFeature::match(const Feature *feature) const {
         result[i].first = cvresult[i].queryIdx;
         result[i].second = cvresult[i].trainIdx;
     }
-
+#endif
     return result;
 }
 

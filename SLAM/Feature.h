@@ -12,7 +12,7 @@ namespace slam {
     public:
         virtual ~Feature() {}
 
-        virtual match_vector match(const Feature *) const = 0;
+        virtual match_vector match(const Feature *feature, size_t k = 5, real radius = 1.0e7f) const = 0;
 
         std::vector<vec2> keypoints;
         

@@ -14,7 +14,7 @@ namespace slam {
         OcvOrbFeature();
         ~OcvOrbFeature();
 
-        match_vector match(const Feature *feature) const override;
+        match_vector match(const Feature *feature, size_t k = 5, real radius = 1.0e7f) const override;
 
     private:
         friend class OcvOrbFeatureExtractor;
