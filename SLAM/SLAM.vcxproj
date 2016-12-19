@@ -126,6 +126,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EightPointEssentialRANSAC.cpp" />
+    <ClCompile Include="FourPointHomographyRANSAC.cpp" />
     <ClCompile Include="LazyPairInitializer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OcvCameraImageStream.cpp" />
@@ -133,12 +135,15 @@
     <ClCompile Include="OcvImageSequenceStream.cpp" />
     <ClCompile Include="OcvOrbFeature.cpp" />
     <ClCompile Include="OcvYamlConfig.cpp" />
+    <ClCompile Include="RANSAC.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="Tracker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Config.h" />
+    <ClInclude Include="EightPointEssentialRANSAC.h" />
     <ClInclude Include="Feature.h" />
+    <ClInclude Include="FourPointHomographyRANSAC.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageStream.h" />

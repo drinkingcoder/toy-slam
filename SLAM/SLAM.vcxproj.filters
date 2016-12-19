@@ -42,6 +42,15 @@
     <ClCompile Include="OcvCameraImageStream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EightPointEssentialRANSAC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FourPointHomographyRANSAC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RANSAC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h">
@@ -105,6 +114,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Triangulator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EightPointEssentialRANSAC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FourPointHomographyRANSAC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
