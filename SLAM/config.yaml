@@ -22,7 +22,7 @@ FAST.spread: 20     # Features are spreaded using grid
 
 Initializer.matchWindow: 2
 
-RANSAC.sigma: 1.0
+RANSAC.sigma: 3.0
 RANSAC.successRate: 0.99
 RANSAC.maxIteration: 100
 

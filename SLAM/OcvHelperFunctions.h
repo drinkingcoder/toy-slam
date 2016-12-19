@@ -129,7 +129,8 @@ namespace slam {
             }
 
             cv::Mat img;
-            cv::drawKeypoints(ocvimage_source->m_pimpl->image, cvkeypoints_source, img, cv::Scalar(0, 0, 255));
+            cv::drawKeypoints(ocvimage_source->m_pimpl->image, cvkeypoints_target, img, cv::Scalar(0, 0, 128));
+            cv::drawKeypoints(img, cvkeypoints_source, img, cv::Scalar(0, 255, 255));
             for (auto &m : matches) {
                 cv::line(img, cvkeypoints_source[m.first].pt, cvkeypoints_target[m.second].pt, cv::Scalar(0, 0, 255));
             }

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <memory>
-#include <deque>
+#include <list>
+#include "Types.h"
 
 namespace slam {
 
@@ -17,6 +18,10 @@ namespace slam {
         virtual ~Frame();
 
         std::unique_ptr<Feature> feature;
+        bool is_keyframe = false;
+
+        mat3 R;
+        vec3 T;
     };
 
     class Tracker {
@@ -36,7 +41,7 @@ namespace slam {
         std::unique_ptr<FeatureExtractor> m_extractor;
         std::unique_ptr<Initializer> m_initializer;
 
-        std::deque<Frame> m_frames;
+        std::list<Frame> m_frames;
     };
 
 }
