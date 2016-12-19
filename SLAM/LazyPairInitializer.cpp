@@ -2,7 +2,8 @@
 #include "Config.h"
 #include "Tracker.h"
 #include "Feature.h"
-#include "RANSAC.h"
+#include "EightPointEssentialRANSAC.h"
+#include "FourPointHomographyRANSAC.h"
 #include "Triangulator.h"
 #include "OcvHelperFunctions.h"
 
