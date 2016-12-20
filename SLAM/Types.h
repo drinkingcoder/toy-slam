@@ -15,6 +15,7 @@ namespace slam {
     typedef Eigen::Matrix3f mat3f;
     typedef Eigen::Matrix4f mat4f;
     typedef Eigen::MatrixXf matxf;
+    typedef Eigen::Quaternionf quatf;
 
     typedef double          reald;
     typedef Eigen::Vector2d vec2d;
@@ -25,6 +26,7 @@ namespace slam {
     typedef Eigen::Matrix3d mat3d;
     typedef Eigen::Matrix4d mat4d;
     typedef Eigen::MatrixXd matxd;
+    typedef Eigen::Quaterniond quatd;
 
     typedef realf real;
     typedef vec2f vec2;
@@ -35,6 +37,7 @@ namespace slam {
     typedef mat3f mat3;
     typedef mat4f mat4;
     typedef matxf matx;
+    typedef quatf quat;
 
     typedef std::vector<std::pair<size_t, size_t>> match_vector;
 

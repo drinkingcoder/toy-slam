@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CeresMap.cpp" />
     <ClCompile Include="EightPointEssentialRANSAC.cpp" />
     <ClCompile Include="FourPointHomographyRANSAC.cpp" />
     <ClCompile Include="LazyPairInitializer.cpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="Triangulator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CeresMap.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="EightPointEssentialRANSAC.h" />
     <ClInclude Include="Feature.h" />
@@ -150,6 +152,7 @@
     <ClInclude Include="ImageStream.h" />
     <ClInclude Include="Initializer.h" />
     <ClInclude Include="LazyPairInitializer.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="OcvCameraImageStream.h" />
     <ClInclude Include="OcvHelperFunctions.h" />
     <ClInclude Include="OcvImage.h" />

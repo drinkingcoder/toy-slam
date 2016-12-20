@@ -1,10 +1,10 @@
 %YAML:1.0
 
 # Input Type
-Input.type: "Camera"
-#Input.type: "Sequence"
+#Input.type: "Camera"
+Input.type: "Sequence"
 
-Input.Sequence.pattern: 'E:\Gangwan-street\2\rect%05d.jpg'
+Input.Sequence.pattern: 'E:\Gangwan-street\1\rect%05d.jpg'
 Input.Sequence.begin: 0
 Input.Sequence.step: 1
 

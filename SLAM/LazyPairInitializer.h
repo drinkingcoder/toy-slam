@@ -2,7 +2,6 @@
 
 #include <memory>
 #include "Initializer.h"
-#include "Types.h"
 
 namespace slam {
 
@@ -19,6 +18,7 @@ namespace slam {
         LazyPairInitializer(const Config *config);
         ~LazyPairInitializer();
 
+        void reset() override;
         bool initialize(const std::shared_ptr<Frame> &pframe) override;
 
     private:

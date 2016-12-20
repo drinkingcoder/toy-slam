@@ -54,6 +54,9 @@
     <ClCompile Include="Triangulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CeresMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h">
@@ -123,6 +126,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FourPointHomographyRANSAC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CeresMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

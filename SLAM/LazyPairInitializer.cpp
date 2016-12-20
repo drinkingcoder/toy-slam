@@ -6,7 +6,6 @@
 #include "EightPointEssentialRANSAC.h"
 #include "FourPointHomographyRANSAC.h"
 #include "Triangulator.h"
-#include "OcvHelperFunctions.h"
 
 using namespace slam;
 
@@ -43,6 +42,10 @@ LazyPairInitializer::LazyPairInitializer(const Config *config) {
 
 LazyPairInitializer::~LazyPairInitializer() = default;
 
+void LazyPairInitializer::reset() {
+    m_first_frame.reset();
+}
+
 bool LazyPairInitializer::initialize(const std::shared_ptr<Frame> &pframe) {
     if (m_first_frame) {
         m_frame_count++;
@@ -61,8 +64,6 @@ bool LazyPairInitializer::initialize(const std::shared_ptr<Frame> &pframe) {
         m_triangulator->run(m_essential_ransac->E);
         matches.swap(m_triangulator->matches);
 
-        OcvHelperFunctions::show_match_overlayed(m_first_frame->feature.get(), pframe->feature.get(), matches, 1);
-
         real angle = acos(m_triangulator->parallax) * 180 / 3.1415927f;
 
         // test image area occupation
@@ -77,19 +78,18 @@ bool LazyPairInitializer::initialize(const std::shared_ptr<Frame> &pframe) {
             grid.emplace(ix + iy * 100);
         }
 
-        //std::cout << angle << " => " << grid.size() << std::endl;
-
         if (angle >= m_min_parallax && grid.size() >= 24) {
-            //m_first_frame->is_keyframe = true;
-            //m_first_frame->is_fixed = true;
-            //m_first_frame->R = mat3::Identity();
-            //m_first_frame->T = vec3::Zero();
-            //current_frame.is_keyframe = true;
-            //current_frame.is_fixed = true;
-            //current_frame.R = m_triangulator->R;
-            //current_frame.T = m_triangulator->T;
-            std::cout << "INIT: " << pframe.get() << std::endl;
-            m_first_frame.reset();
+
+            this->matches.swap(matches);
+            this->points.swap(m_triangulator->points);
+
+            this->init_frame_1 = m_first_frame;
+            this->init_frame_1->R = mat3::Identity();
+            this->init_frame_1->T = vec3::Zero();
+
+            this->init_frame_2 = pframe;
+            this->init_frame_2->R = m_triangulator->R;
+            this->init_frame_2->T = m_triangulator->T;
 
             return true;
         }

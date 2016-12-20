@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <list>
 #include "Types.h"
 
 namespace slam {
@@ -11,6 +10,7 @@ namespace slam {
     class Feature;
     class FeatureExtractor;
     class Initializer;
+    class Map;
 
     class Frame {
     public:
@@ -18,7 +18,6 @@ namespace slam {
         virtual ~Frame();
 
         std::unique_ptr<Feature> feature;
-        bool is_keyframe = false;
 
         mat3 R;
         vec3 T;
@@ -37,6 +36,7 @@ namespace slam {
 
         std::unique_ptr<FeatureExtractor> m_extractor;
         std::unique_ptr<Initializer> m_initializer;
+        std::unique_ptr<Map> m_map;
     };
 
 }
