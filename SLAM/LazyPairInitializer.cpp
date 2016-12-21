@@ -7,6 +7,8 @@
 #include "FourPointHomographyRANSAC.h"
 #include "Triangulator.h"
 
+#include "OcvHelperFunctions.h"
+
 using namespace slam;
 
 LazyPairInitializer::LazyPairInitializer(const Config *config) {
@@ -78,18 +80,20 @@ bool LazyPairInitializer::initialize(const std::shared_ptr<Frame> &pframe) {
             grid.emplace(ix + iy * 100);
         }
 
-        if (angle >= m_min_parallax && grid.size() >= 24) {
+        if (angle >= m_min_parallax && grid.size() >= 48) {
+
+            OcvHelperFunctions::show_match_overlayed(m_first_frame->feature.get(), pframe->feature.get(), matches, 1);
 
             this->matches.swap(matches);
             this->points.swap(m_triangulator->points);
 
-            this->init_frame_1 = m_first_frame;
-            this->init_frame_1->R = mat3::Identity();
-            this->init_frame_1->T = vec3::Zero();
+            m_first_frame->R = mat3::Identity();
+            m_first_frame->T = vec3::Zero();
 
-            this->init_frame_2 = pframe;
-            this->init_frame_2->R = m_triangulator->R;
-            this->init_frame_2->T = m_triangulator->T;
+            pframe->R = m_triangulator->R;
+            pframe->T = m_triangulator->T;
+
+            reference_frame = m_first_frame;
 
             return true;
         }

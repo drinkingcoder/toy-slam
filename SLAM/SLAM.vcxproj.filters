@@ -57,6 +57,9 @@
     <ClCompile Include="CeresMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FourPointPnPRANSAC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h">
@@ -132,6 +135,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CeresMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UDPSocket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FourPointPnPRANSAC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

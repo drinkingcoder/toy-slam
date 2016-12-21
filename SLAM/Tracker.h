@@ -21,6 +21,9 @@ namespace slam {
 
         mat3 R;
         vec3 T;
+
+        size_t keyframe_id;
+        std::vector<size_t> landmark_map;
     };
 
     class Tracker {

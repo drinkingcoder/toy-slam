@@ -6,6 +6,7 @@
 namespace slam {
 
     class Frame;
+    class Initializer;
 
     class Map {
     public:
@@ -18,7 +19,10 @@ namespace slam {
 
         virtual void add_observation(size_t keyframe, size_t landmark, const vec2 &x) = 0;
 
-        virtual bool init(size_t keyframe1, size_t keyframe2) = 0;
+        virtual bool init(const std::shared_ptr<Frame> &current_frame, const Initializer *initializer) = 0;
+
+        virtual bool localize(const std::shared_ptr<Frame> &pframe) = 0;
+
     };
 
 }

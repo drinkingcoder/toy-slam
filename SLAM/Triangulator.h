@@ -22,6 +22,8 @@ namespace slam {
 
         void run(const mat3 &E);
 
+        void triangulate();
+
     private:
         size_t try_triangulate(const mat3 &R, const vec3 &T, std::vector<vec3> &triangulated, std::vector<bool> &inlier_set, real &rparallax) const;
 

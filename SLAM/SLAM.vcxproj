@@ -129,6 +129,7 @@
     <ClCompile Include="CeresMap.cpp" />
     <ClCompile Include="EightPointEssentialRANSAC.cpp" />
     <ClCompile Include="FourPointHomographyRANSAC.cpp" />
+    <ClCompile Include="FourPointPnPRANSAC.cpp" />
     <ClCompile Include="LazyPairInitializer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OcvCameraImageStream.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="EightPointEssentialRANSAC.h" />
     <ClInclude Include="Feature.h" />
     <ClInclude Include="FourPointHomographyRANSAC.h" />
+    <ClInclude Include="FourPointPnPRANSAC.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageStream.h" />
@@ -167,6 +169,7 @@
     <ClInclude Include="Tracker.h" />
     <ClInclude Include="Triangulator.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="UDPSocket.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.yaml" />

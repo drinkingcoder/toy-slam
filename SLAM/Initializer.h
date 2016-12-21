@@ -14,8 +14,7 @@ namespace slam {
         virtual void reset() = 0;
         virtual bool initialize(const std::shared_ptr<Frame> &pframe) = 0;
 
-        std::shared_ptr<Frame> init_frame_1;
-        std::shared_ptr<Frame> init_frame_2;
+        std::shared_ptr<Frame> reference_frame;
         match_vector matches;
         std::vector<vec3> points;
     };

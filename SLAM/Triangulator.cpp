@@ -105,6 +105,30 @@ void Triangulator::run(const mat3 & E) {
     matches.shrink_to_fit();
 }
 
+void Triangulator::triangulate() {
+    points.clear();
+    matches.clear();
+
+    const match_vector &rmatches = *m_pmatches;
+    size_t N = rmatches.size();
+    std::vector<vec3> rpoints(N);
+    std::vector<bool> rinliers(N, false);
+    real rparallax;
+
+    try_triangulate(R, T, rpoints, rinliers, rparallax);
+
+    points.reserve(N);
+    matches.reserve(N);
+    for (size_t i = 0; i < N; ++i) {
+        if (rinliers[i]) {
+            points.push_back(rpoints[i]);
+            matches.push_back(rmatches[i]);
+        }
+    }
+    points.shrink_to_fit();
+    matches.shrink_to_fit();
+}
+
 size_t Triangulator::try_triangulate(const mat3 & R, const vec3 & T, std::vector<vec3>& triangulated, std::vector<bool>& inlier_set, real &rparallax) const {
     const std::vector<vec2> &pa = *m_ppa;
     const std::vector<vec2> &pb = *m_ppb;
