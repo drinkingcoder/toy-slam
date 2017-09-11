@@ -92,8 +92,8 @@ void handleKeys() {
   if(keyhandler.test(RIGHT)) {
     camctrl.target.x += 1;
   }
-  if(keyhandler.test(KeyEvent.VK_PAGE_UP)) {
-  }
+  //if(keyhandler.test(KeyEvent.VK_PAGE_UP)) {
+  //}
 }
 
 void draw() {
